@@ -1,25 +1,42 @@
-Ionic App Base
+RGB Demo
 =====================
 
-A starting project for Ionic that optionally supports using custom SCSS.
+A project demonstrating how to connect to particle.io using an angular.js system like ionic / cordova. This project allows control of two RGB LED values via cellular networks.
+It demonstrates the creation of variables, functions and events in the particle.io cloud, then how to connect to them using angular.js in an ionic framework.
 
-## Using this project
-
-We recommend using the [Ionic CLI](https://github.com/driftyco/ionic-cli) to create new Ionic projects that are based on this project but use a ready-made starter template.
-
-For example, to start a new Ionic project with the default tabs interface, make sure the `ionic` utility is installed:
-
+Install Particle-cli:
 ```bash
-$ npm install -g ionic
+npm i -g particle-cli
 ```
 
-Then run:
-
+Install cordova and ionic.io
 ```bash
-$ ionic start myProject tabs
+npm i -g cordova ionic
 ```
+
+Check Login for particle.io
+```bash
+particle login
+```
+
+Start local server with ionic app
+```bash
+ionic serve
+```
+
+Add Android platform
+```bash
+ionic platform add android
+```
+
+Build and Run Android platform
+```bash
+ionic run android
+```
+
+If you are looking for RGB Hex Conversion tool for arduino, go to the [Arduino Source Code](https://github.com/thebelin/rgb-demo/blob/master/embedded/rgb-demo.ino).
+
+
 
 More info on this can be found on the Ionic [Getting Started](http://ionicframework.com/getting-started) page and the [Ionic CLI](https://github.com/driftyco/ionic-cli) repo.
 
-## Issues
-Issues have been disabled on this repo, if you do find an issue or have a question consider posting it on the [Ionic Forum](http://forum.ionicframework.com/).  Or else if there is truly an error, follow our guidelines for [submitting an issue](http://ionicframework.com/submit-issue/) to the main Ionic repository.
