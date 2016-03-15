@@ -1,5 +1,6 @@
 RGB Demo
 =====================
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/E2Nmnc8KeSM/0.jpg)](http://www.youtube.com/watch?v=E2Nmnc8KeSM "Demonstration of RGB Controller")
 
 A project demonstrating how to connect to particle.io using an angular.js system like ionic / cordova. This project allows control of two RGB LED values via cellular networks.
 It demonstrates the creation of variables, functions and events in the particle.io cloud, then how to connect to them using angular.js in an ionic framework.
