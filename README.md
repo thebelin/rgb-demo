@@ -45,6 +45,8 @@ Build and Run Android platform
 ionic run android
 ```
 
+If you are looking for the particle.io angular service for authentication, variables, functions and events, it's in the [js source code](https://github.com/thebelin/rgb-demo/blob/master/www/js/services.js).
+
 If you are looking for RGB Hex Conversion tool for arduino, go to the [Arduino Source Code](https://github.com/thebelin/rgb-demo/blob/master/embedded/rgb-demo.ino).
 
 
