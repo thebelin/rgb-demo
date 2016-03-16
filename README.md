@@ -2,6 +2,10 @@ RGB Demo
 =====================
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/E2Nmnc8KeSM/0.jpg)](http://www.youtube.com/watch?v=E2Nmnc8KeSM "Demonstration of RGB Controller")
 ____
+
+[Presentation Slideshow](https://goo.gl/WMpqub)
+____
+
 A project demonstrating how to connect to particle.io using an angular.js system like ionic / cordova.
 
 Particle.io is a platform which replaced Spark Core, allowing anyone who can interact with an API to build connected devices. A REST API, managed by Particle.io, handles the sharing and broadcast of data directly from the devices. Creation and connection is simultaneous on this platform, even allowing the developer to flash the programmer on the Particle Electron "over the air" on the 3G connection.
