@@ -56,6 +56,10 @@ int redPin2 = B0;
 int greenPin2 = B1;
 int bluePin2 = B2;
 
+//RGB LED Bank 3 (not in circuit explanation)
+int redPin3 = D3;
+int greenPin3 = B3;
+int bluePin3 = A4;
 
 /**
  * The current colors, update when the color function is called
@@ -63,8 +67,11 @@ int bluePin2 = B2;
 // Set to black (off) to start
 String currColor = "000000";
 
-// Set to white (on) to start
-String currColor2 = "ffffff";
+// Set to black (off) to start
+String currColor2 = "000000";
+
+// Set to black (off) to start
+String currColor3 = "000000";
 
 // These are helper functions for transforming the RGB Hex to RGB(int)
 #define RED(a) (a>>16)
@@ -89,6 +96,9 @@ void setup ()
   // A Particle.io function to set the color2
   Particle.function("color2", setColor2);
 
+  // A Particle.io function to set the color2
+  Particle.function("color3", setColor3);
+
   // A Particle.io function to set all the color
   Particle.function("allcolor", allColor);
 
@@ -107,20 +117,30 @@ void setup ()
 void update ()
 {}
 
+// This publishes the events on Particle.io
 void publish (String event, String data)
 {
-  // A Particle.io event which allows the tracking of the heatPin
   bool success;
   success = Particle.publish(event, data);
 }
 
+// Converts hex string into a long which can be used to get RGB values
 long hexToLong (char *hexChars)
 {
   return strtol(hexChars, NULL, 16);
 }
 
-// Set the color according to RGB values sent
-int setColor (String command)
+// Sends color information to the pins specified
+void sendColorToPins (int rPin, int gPin, int bPin, long color)
+{
+  // write the values
+  analogWrite (rPin, RED(color));
+  analogWrite (gPin, GREEN(color));
+  analogWrite (bPin, BLUE(color));
+}
+
+// Converts a string command into a long color which can be made into RGB values
+long commandToColor (String command)
 {
   // the command should be 6 characters to be a set
   if (command.length() != 6) {
@@ -135,83 +155,108 @@ int setColor (String command)
   char colorArr[8];
   currColor.toCharArray(colorArr, 8);
 
-  // convert that char to a number
-  long number = hexToLong(colorArr);
+  // convert that char to a number and return it
+  return hexToLong(colorArr);
+}
 
-  // write the values
-  analogWrite (redPin, RED(number));
-  analogWrite (greenPin, GREEN(number));
-  analogWrite (bluePin, BLUE(number));
+// Set the color according to RGB values sent
+int setColor (String command)
+{
+  // Get the RGB hex value as a long
+  long number = commandToColor(command);
 
-  // publish the event
-  publish("change-color", currColor);
+  // If the color isn't a -1, then use it to set the current Color
+  if (number != -1) {
+    // Record the color which was set (for the getter)
+    currColor = command;
 
-  // Indicate completion
-  return 1;
+    // write the values
+    sendColorToPins(redPin, greenPin, bluePin, number);
+
+    // publish the event
+    publish("change-color", currColor);
+
+    // Indicate completion
+    return 1;
+  }
+  // Indicate Error if it got this far
+  return -1;
 }
 
 // Set the color according to RGB values sent
 int setColor2 (String command)
 {
-  // the command should be 6 characters to be a set
-  if (command.length() != 6) {
-    return -1;
+  // Get the RGB hex value as a long
+  long number = commandToColor(command);
+
+  // If the color isn't a -1, then use it to set the current Color
+  if (number != -1) {
+    // Record the color which was set (for the getter)
+    currColor3 = command;
+
+    // write the values
+    sendColorToPins(redPin2, greenPin2, bluePin2, number);
+
+    // publish the event
+    publish("change-color2", currColor);
+
+    // Indicate completion
+    return 1;
   }
-
-  // Record the color which was set (for the getter)
-  currColor2 = command;
-
-  // convert into R, G and B additive values between 0 and 255, write them to pins
-  // make a char with the String contents
-  char colorArr[8];
-  currColor2.toCharArray(colorArr, 8);
-
-  // convert that char to a number
-  long number = hexToLong(colorArr);
-
-  // write the values
-  analogWrite (redPin2, RED(number));
-  analogWrite (greenPin2, GREEN(number));
-  analogWrite (bluePin2, BLUE(number));
-
-  // publish the event
-  publish("change-color2", currColor2);
-
-  // Indicate completion
-  return 1;
+  // Indicate Error if it got this far
+  return -1;
 }
 
+// Set the color according to RGB values sent
+int setColor3 (String command)
+{
+  // Get the RGB hex value as a long
+  long number = commandToColor(command);
+
+  // If the color isn't a -1, then use it to set the current Color
+  if (number != -1) {
+    // Record the color which was set (for the getter)
+    currColor3 = command;
+
+    // write the values
+    sendColorToPins(redPin3, greenPin3, bluePin3, number);
+
+    // publish the event
+    publish("change-color3", currColor);
+
+    // Indicate completion
+    return 1;
+  }
+  // Indicate Error if it got this far
+  return -1;
+}
+
+// Set all colors
 int allColor (String command)
 {
-  // the command should be 6 characters to be a set
-  if (command.length() != 6) {
-    return -1;
+  // Get the RGB hex value as a long
+  long number = commandToColor(command);
+
+  // If the color isn't a -1, then use it to set the current Color
+  if (number != -1) {
+    // Record the color which was set (for the getter)
+    currColor = command;
+    currColor2 = command;
+    currColor3 = command;
+
+    // write the values
+    sendColorToPins(redPin, greenPin, bluePin, number);
+    sendColorToPins(redPin2, greenPin2, bluePin2, number);
+    sendColorToPins(redPin3, greenPin3, bluePin3, number);
+
+    // publish the event
+    publish("change-color", currColor);
+    publish("change-color2", currColor);
+    publish("change-color3", currColor);
+
+    // Indicate completion
+    return 1;
   }
-
-  // Record the color which was set (for the getter)
-  currColor = command;
-  currColor2 = command;
-
-  // convert into R, G and B additive values between 0 and 255, write them to pins
-  // make a char with the String contents
-  char colorArr[8];
-  currColor.toCharArray(colorArr, 8);
-
-  // convert that char to a number
-  long number = hexToLong(colorArr);
-
-  // write the values
-  analogWrite (redPin, RED(number));
-  analogWrite (greenPin, GREEN(number));
-  analogWrite (bluePin, BLUE(number));
-  analogWrite (redPin2, RED(number));
-  analogWrite (greenPin2, GREEN(number));
-  analogWrite (bluePin2, BLUE(number));
-
-  // publish the events
-  publish("change-color", currColor2);
-  publish("change-color2", currColor2);
-
-  // Indicate completion
-  return 1;  
+  // Indicate Error if it got this far
+  return -1;
 }
