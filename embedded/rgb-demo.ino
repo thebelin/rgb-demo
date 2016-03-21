@@ -96,7 +96,7 @@ void setup ()
   // A Particle.io function to set the color2
   Particle.function("color2", setColor2);
 
-  // A Particle.io function to set the color2
+  // A Particle.io function to set the color3
   Particle.function("color3", setColor3);
 
   // A Particle.io function to set all the color
@@ -107,6 +107,9 @@ void setup ()
 
   // A Particle.io variable to get the current color2
   Particle.variable("otherColor", currColor2);
+
+  // A Particle.io variable to get the current color3
+  Particle.variable("anotherColor", currColor3);
 
   // Set the default color
   setColor(currColor);
