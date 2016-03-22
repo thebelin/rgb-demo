@@ -1,6 +1,4 @@
 angular.module('app.directives', [])
 
-.directive('blankDirective', [function(){
-
-}]);
-
+.directive('placeholder', function () {
+});
