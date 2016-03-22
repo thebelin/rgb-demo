@@ -1,38 +1,7 @@
 <ion-view title="Control Color">
     <ion-content overflow-scroll="true" padding="true" >
-        <ion-list>
-            <ion-radio class="item"
-                data-ng-repeat="device in p.devices"
-                ng-checked="p.deviceId==device.id"
-                ng-model="p.deviceId"
-                ng-value="device.id"
-                ng-change="p.setDevice(device.id)">
-                <span data-ng-bind="device.id"></span>
-                <span data-ng-bind="device.name"></span>
-            </ion-radio>
-        </ion-list>
 
-        <form class="list" data-ng-if="!p.token">
-            <label class="item item-input">
-              <span class="input-label">Particle User</span>
-              <input type="text" data-ng-model="p.username">
-            </label>
-
-            <label class="item item-input">
-              <span class="input-label">Particle Pass</span>
-              <input type="password" data-ng-model="p.password">
-            </label>
-
-            <button class="button button-full button-positive" data-ng-click="p.authenticate()">
-              Log In To Particle
-            </button>
-        </form>
-
-        <form class="list" data-ng-if="p.token">
-            <button class="button button-full button-positive" data-ng-click="p.logout()">
-              Log Out of Particle
-            </button>
-        </form>
+        <io-particle></io-particle>
 
         <color-picker ng-model="i.colorPicker" ng-change="sendColor()"></color-picker>
 

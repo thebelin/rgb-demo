@@ -3,61 +3,6 @@ angular.module('app.controllers', [])
 .controller('controlColorCtrl', ['$scope', '$interval', '$timeout', 'particle', 'safeparse',
   function ($scope, $interval, $timeout, particle, safeparse) {
 
-    // Particle device model for access on $scope
-    $scope.p = {
-      username: '',
-      password: '',
-      currentDevice: '',
-      deviceId: particle.setDevice(),
-      token: particle.setToken(),
-      devices: [],
-      
-      // Make a list of available devices
-      getDevices: function () {
-        particle.getDevices(function (deviceList) {
-          console.log('got particle.io device list: ', deviceList);
-          $scope.p.devices = deviceList.data;
-        });
-      },
-
-      // Authenticate on the particle.io platform
-      authenticate: function () {
-        // call authenticate with a device list as a callback
-        particle.authenticate($scope.p.username, $scope.p.password, function (authData) {
-          console.log('authenticated: ', authData);
-          // Set the local auth token
-          $scope.p.token = authData.access_token || '';
-
-          // List available devices
-          $scope.p.getDevices();
-
-        });
-      },
-
-      // terminate session and blank the token
-      logout: function () {
-        $scope.p.username = '';
-        $scope.p.password = '';
-        $scope.p.token = '';
-        $scope.p.devices = [];
-        particle.logout();
-      },
-
-      // Expose the particle setToken method
-      setToken: particle.setToken,
-
-      // Select the current device for particle platform
-      setDevice: function (deviceId) {
-        if (deviceId) {
-          console.log('setDevice', deviceId);
-          $scope.p.deviceId = deviceId;
-          particle.setDevice(deviceId);
-          $scope.startup();
-        }
-        return $scope.p.deviceId;
-      }
-    };
-
     $scope.i = {
       colorPicker: '#ff0000',
       current: 'color',
@@ -81,9 +26,6 @@ angular.module('app.controllers', [])
     };
 
     $scope.startup = function () {
-      // Get the device list
-      $scope.p.getDevices();
-
       // Get the initial colors
       $scope.getColor = (function () {
         // Use particle to get the current color
@@ -122,7 +64,7 @@ angular.module('app.controllers', [])
     } else if (particle.setToken()) {
       // If there's authentication, but no selected device, just get devices
       // only start when the user has selected a device
-      $scope.p.getDevices();
+      //$scope.getDevices();
     }
     
   }]);
