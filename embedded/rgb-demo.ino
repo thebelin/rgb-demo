@@ -195,13 +195,13 @@ int setColor2 (String command)
   // If the color isn't a -1, then use it to set the current Color
   if (number != -1) {
     // Record the color which was set (for the getter)
-    currColor3 = command;
+    currColor2 = command;
 
     // write the values
     sendColorToPins(redPin2, greenPin2, bluePin2, number);
 
     // publish the event
-    publish("change-color2", currColor);
+    publish("change-color2", currColor2);
 
     // Indicate completion
     return 1;
@@ -225,7 +225,7 @@ int setColor3 (String command)
     sendColorToPins(redPin3, greenPin3, bluePin3, number);
 
     // publish the event
-    publish("change-color3", currColor);
+    publish("change-color3", currColor3);
 
     // Indicate completion
     return 1;
@@ -254,8 +254,8 @@ int allColor (String command)
 
     // publish the event
     publish("change-color", currColor);
-    publish("change-color2", currColor);
-    publish("change-color3", currColor);
+    publish("change-color2", currColor2);
+    publish("change-color3", currColor3);
 
     // Indicate completion
     return 1;
